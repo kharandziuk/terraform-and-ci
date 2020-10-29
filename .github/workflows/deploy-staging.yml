@@ -7,13 +7,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Dispatch submodule_push event
-        uses: mvasigh/dispatch-action@main
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.PAT }}
-          owner: kharandziuk
-          event_type: test
-          message: |
-            {
-                "environment": "staging"
-            }
+          event-type: deploy
+          client_payload: '{"environment": "staging"}'
