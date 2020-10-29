@@ -15,7 +15,7 @@ jobs:
           terraform_version: 0.12.24
         id: setup-terraform
 
-      - run: echo "The selected color is ${{ steps.setup-terraform.outputs.terraform_path }}"
+      - run: echo "path to terraform ${{ steps.setup-terraform.outputs.terraform_path }}"
 
       - name: check terraform formating
         run:  terraform fmt -recursive -check
@@ -25,13 +25,13 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-        working-directory: ./environments
+        working-directory: ./environments/dev
 
       - run: terraform apply -auto-approve
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        working-directory: ./environments
+        working-directory: ./environments/dev
 
   cleanup:
     runs-on: ubuntu-latest
@@ -49,10 +49,10 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        working-directory: ./environments
+        working-directory: ./environments/dev
 
       - run: terraform destroy -auto-approve
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        working-directory: ./environments
+        working-directory: ./environments/dev
