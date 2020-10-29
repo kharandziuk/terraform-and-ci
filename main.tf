@@ -15,6 +15,7 @@ resource "local_file" "private_key" {
   filename        = local.public_key_path
   file_permission = "0600"
 }
+
 variable "stage" {
   description = "Stage. e.g.:dev, prod, staging"
 }

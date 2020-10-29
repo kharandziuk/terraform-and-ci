@@ -17,5 +17,5 @@ provider "aws" {
 
 module "dev_env" {
   source = "../../"
-  stage = "dev"
+  stage  = "dev"
 }

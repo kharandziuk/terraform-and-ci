@@ -1,0 +1,12 @@
+on:
+  repository_dispatch:
+    types: [ test ]
+
+jobs:
+  validate:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "Hello ${{ github.event.event_type }}!"
+      - run: echo "Hello ${{ github.event.client_payload.message.environment }}!"
