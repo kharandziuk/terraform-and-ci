@@ -1,10 +1,10 @@
 on:
   repository_dispatch:
-    types: [ deploy-environment ]
+    types: [ deploy ]
 
 defaults:
   run:
-    working-directory: ./environments/staging
+    working-directory: ./environments/${{github.event.client_payload..environment}}
 
 jobs:
   validate:
@@ -13,6 +13,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Setup Terraform
         uses: autero1/action-terraform@v0.1.0
         with:
