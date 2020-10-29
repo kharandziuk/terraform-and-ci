@@ -12,7 +12,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           owner: kharandziuk
-          event_type: deploy-environment
+          event_type: test
           message: |
             {
                 "environment": "staging"
