@@ -1,0 +1,18 @@
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: autero1/action-terraform@v0.1.0
+        with:
+          terraform_version: 0.12.24
+
+      - name: check terraform formating
+        run:  terraform fmt -recursive -check
