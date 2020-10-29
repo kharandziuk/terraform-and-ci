@@ -10,7 +10,7 @@ jobs:
       - name: Dispatch submodule_push event
         uses: mvasigh/dispatch-action@main
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           owner: kharandziuk
           event_type: deploy-environment
           message: |
