@@ -15,6 +15,6 @@ provider "aws" {
   region = var.aws_region
 }
 
-module "dev_env" {
+module "env" {
   source = "../../"
 }
