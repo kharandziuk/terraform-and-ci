@@ -1,4 +1,3 @@
-
 locals {
   tmp_path               = "${path.module}/.terraform/tmp"
   public_key_path        = "${local.tmp_path}/key_rsa"
@@ -16,12 +15,15 @@ resource "local_file" "private_key" {
   filename        = local.public_key_path
   file_permission = "0600"
 }
+variable "stage" {
+  description = "Stage. e.g.:dev, prod, staging"
+}
 
 
 
 
 module "instance" {
-  description = "terraform and ci"
+  description = "${var.stage} terraform and ci"
   # TODO: use exact version
   source     = "git::https://github.com/kharandziuk/aws-ec2-bootstrap.git"
   public_key = tls_private_key.default.public_key_openssh
