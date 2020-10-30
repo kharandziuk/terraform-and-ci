@@ -1,10 +1,8 @@
-on:
-  repository_dispatch:
-    types: [ deploy ]
+on: ['deployment']
 
 defaults:
   run:
-    working-directory: ./environments/${{github.event.client_payload..environment}}
+    working-directory: ./environments/dev
 
 jobs:
   validate:
@@ -12,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - run: echo 'hello'
       - uses: actions/checkout@v2
 
       - name: Setup Terraform
