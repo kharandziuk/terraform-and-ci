@@ -7,9 +7,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v1
+      - uses: chrnorm/deployment-action@releases/v1
+        name: Create GitHub deployment
+        id: deployment
         with:
-          token: ${{ secrets.PAT }}
-          event-type: deploy
-          client_payload: '{"environment": "staging"}'
+          token: "${{ github.token }}"
+          environment: production

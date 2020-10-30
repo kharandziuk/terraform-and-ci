@@ -1,4 +1,5 @@
-on: ['deployment']
+on:
+  deployment
 
 defaults:
   run:
