@@ -11,15 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: check terraform formating
-        run:  terraform fmt -recursive -check
       - uses: actions/checkout@v2
 
       - name: Setup Terraform
         uses: autero1/action-terraform@v0.1.0
         with:
-          terraform_version: 0.12.24
+          terraform_version: 0.12.29
         id: setup-terraform
+
+      - name: check terraform formating
+        run:  terraform fmt -recursive -check
 
       - run:  terraform init
         env:
@@ -31,6 +32,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+
   cleanup:
     runs-on: ubuntu-latest
     needs: [validate]
@@ -41,7 +43,7 @@ jobs:
       - name: Setup Terraform
         uses: autero1/action-terraform@v0.1.0
         with:
-          terraform_version: 0.12.24
+          terraform_version: 0.12.29
 
       - run: terraform init
         env:

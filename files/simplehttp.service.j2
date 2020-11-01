@@ -1,0 +1,13 @@
+[Unit]
+Description=My Miscellaneous Service
+After=network.target
+
+[Service]
+Type=simple
+User={{ user_name }}
+WorkingDirectory=/home/{{user_name}}
+ExecStart=/usr/bin/python3 -m http.server {{server_port}}
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

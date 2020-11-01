@@ -1,0 +1,28 @@
+- name: server
+  hosts: all
+  become: True
+  vars:
+    user_name: application_user
+    server_port: 5000
+  tasks:
+    - name: create user
+      user:
+        name: "{{ user_name }}"
+        groups: users
+        shell: /bin/bash
+
+    - template:
+        src: files/simplehttp.service.j2
+        dest: /etc/systemd/system/simplehttp.service
+
+    - name: Make sure a service is running
+      systemd:
+        state: started
+        name: simplehttp
+        daemon_reload: true
+
+    - name: Redirect port 80 to {{server_port}} with Rich Rule
+      shell: |
+       iptables -A INPUT -p tcp --dport 80 -j ACCEPT &&
+       iptables -A PREROUTING -t nat -p tcp --dport 80 -j REDIRECT --to-port {{server_port}} &&
+       iptables -t nat -I OUTPUT -p tcp -o lo --dport 80  -j REDIRECT --to-ports {{server_port}}
