@@ -15,7 +15,23 @@ provider "aws" {
   region = var.aws_region
 }
 
-module "dev_env" {
+module "env" {
   source = "../../"
   stage  = "dev"
+}
+
+output "key_path" {
+  value = module.env.private_key_path
+}
+
+output "ip" {
+  value = module.env.instance_ip
+}
+
+output "inventory" {
+  value = module.env.inventory
+}
+
+output "ansible_command" {
+  value = module.env.ansible_command
 }
