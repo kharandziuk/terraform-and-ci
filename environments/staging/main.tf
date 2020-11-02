@@ -19,3 +19,11 @@ module "env" {
   source = "../../"
   stage  = "staging"
 }
+
+output "inventory" {
+  value = module.env.inventory
+}
+
+output "ansible_command" {
+  value = module.env.ansible_command
+}
