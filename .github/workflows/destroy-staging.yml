@@ -16,7 +16,7 @@ jobs:
       - name: Setup Terraform
         uses: autero1/action-terraform@v0.1.0
         with:
-          terraform_version: 0.12.24
+          terraform_version: 0.12.29
 
       - run: terraform init
         env:
