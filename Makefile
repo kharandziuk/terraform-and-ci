@@ -6,7 +6,8 @@ inventory.yml: terraform-apply
 
 .PHONY: terraform-apply
 terraform-apply:
-	cd environments/dev && terraform apply --auto-approve
+	cd environments/dev && terraform init && terraform apply --auto-approve
 
+.PHONY: terraform-destroy
 terraform-destroy:
-	cd environments/dev && terraform destroy --auto-approve
+	cd environments/dev && terraform init && terraform destroy --auto-approve
