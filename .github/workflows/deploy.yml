@@ -1,6 +1,8 @@
 name: deploy envinronment
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
@@ -21,6 +23,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: set default enevironment
+        run: echo "echo $GITHUB_EVENT_NAME"
 
       - name: set default enevironment
         run: echo "DEPLOYMENT_ENV=dev" >> $GITHUB_ENV
