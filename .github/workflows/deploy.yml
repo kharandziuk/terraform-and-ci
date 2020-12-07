@@ -1,3 +1,5 @@
+name: deploy envinronment
+
 on:
   pull_request:
     branches: [ main ]
@@ -19,6 +21,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.12.29
 
       - name: start deployment
         uses: bobheadxi/deployments@v0.4.3
