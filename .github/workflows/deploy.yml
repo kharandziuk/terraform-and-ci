@@ -22,10 +22,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Read package.json
+        id: terraform_version
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: .terraform-version
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 0.12.29
+          terraform_version: ${{ steps.terraform_version.outputs.content }}
 
       - name: start deployment
         uses: bobheadxi/deployments@v0.4.3
