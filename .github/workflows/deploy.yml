@@ -5,7 +5,7 @@ on:
     branches: [ main ]
   workflow_dispatch:
     inputs:
-      environemnt:
+      environment:
         description: 'dev or staging'
         required: true
 
@@ -22,7 +22,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Read package.json
+      - name: set default enevironment
+        run: echo "DEPLOYMENT_ENV=dev" >> $GITHUB_ENV
+
+      - name: in a case of main branch
+        run: echo "DEPLOYMENT_ENV=staging" >> $GITHUB_ENV
+        if:  github.ref == 'ref/head/main'
+
+      - name: read terraform_version
         id: terraform_version
         uses: juliangruber/read-file-action@v1
         with:
@@ -39,7 +46,7 @@ jobs:
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
-          env: ${{ github.event.inputs.environemnt || 'dev' }}
+          env: ${{ github.event.inputs.environemnt || env.DEPLOYMENT_ENV }}
 
       - name: make deploy
         run: make
