@@ -7,12 +7,8 @@ on:
         description: 'dev or staging'
         required: true
 
-defaults:
-  run:
-    working-directory: ./environments/dev
-
 jobs:
-  validate:
+  destroy-environment:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +25,7 @@ jobs:
         with:
           terraform_version: ${{ steps.terraform_version.outputs.content }}
 
-      - name: make deploy
+      - name: make destroy
         run: make terraform-destroy
 
       - name: update deployment status

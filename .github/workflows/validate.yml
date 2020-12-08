@@ -1,11 +1,9 @@
+name: validate
+
 on:
   workflow_dispatch:
   pull_request:
     branches: [ main ]
-
-defaults:
-  run:
-    working-directory: ./environments/dev
 
 jobs:
   validate:
