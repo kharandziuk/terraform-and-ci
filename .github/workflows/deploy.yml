@@ -62,6 +62,9 @@ jobs:
 
       - name: make deploy
         run: make
+        env:
+          ENV: ${{ env.DEPLOYMENT_ENV }}
+
 
       - name: update deployment status
         uses: bobheadxi/deployments@v0.4.3
