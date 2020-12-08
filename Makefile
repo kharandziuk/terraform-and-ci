@@ -3,7 +3,6 @@ run-playbook: inventory.yml
 
 inventory.yml: terraform-apply
 	cd environments/dev && terraform output inventory > ../../inventory.yml
-
 .PHONY: terraform-apply
 terraform-apply:
 	cd environments/dev && terraform init && terraform apply --auto-approve
@@ -11,3 +10,4 @@ terraform-apply:
 .PHONY: terraform-destroy
 terraform-destroy:
 	cd environments/dev && terraform init && terraform destroy --auto-approve
+
