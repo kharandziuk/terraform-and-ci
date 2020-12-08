@@ -45,7 +45,7 @@ jobs:
           path: .terraform-version
 
       - name: set default enevironment
-        run: echo "echo 'deploy to ${{ env.DEPLOYMENT_ENV}}'"
+        run: echo "echo 'deploy to ${{ env.DEPLOYMENT_ENV }}'"
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
