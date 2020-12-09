@@ -24,19 +24,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: set default enevironment
-        run: |
-          if [ ! -z $INPUT ]
-          then
-            echo "DEPLOYMENT_ENV=$INPUT" >> $GITHUB_ENV
-          elif [ $GITHUB_EVENT_NAME = "push" ]
-          then
-            echo "DEPLOYMENT_ENV=staging" >> $GITHUB_ENV
-          else
-            echo "DEPLOYMENT_ENV=dev" >> $GITHUB_ENV
-          fi
-        env:
-          INPUT: ${{ github.event.inputs.environment }}
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - run: pip install invoke python-dotenv ansible
 
       - name: read terraform_version
         id: terraform_version
@@ -44,8 +36,8 @@ jobs:
         with:
           path: .terraform-version
 
-      - name: set default enevironment
-        run: echo "echo 'deploy to ${{ env.DEPLOYMENT_ENV }}'"
+      - name: set default enevironmen
+        run: echo "DEPLOYMENT_ENV=$(inv which-environment | tail -n1)" >> $GITHUB_ENV
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -60,10 +52,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           env: ${{ env.DEPLOYMENT_ENV }}
 
-      - name: make deploy
-        run: make
+      - name: run invoke
+        run: invoke provision
         env:
-          ENV: ${{ env.DEPLOYMENT_ENV }}
+          DEPLOYMENT_ENV: ${{ env.DEPLOYMENT_ENV }}
 
 
       - name: update deployment status
