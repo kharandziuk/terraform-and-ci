@@ -1,3 +1,5 @@
+# you should never add .env into the repo
+.env
 # inventory is generated every time
 inventory.yml
 
