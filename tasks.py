@@ -31,10 +31,11 @@ def apply_infrastructure(c):
 @task(apply_infrastructure)
 def output_inventory(c):
     c.run(f"cd {ENV_DIR} && terraform output inventory > {inventory_path}")
+    c.run(f"cat {inventory_path}")
 
 @task(output_inventory)
 def provision(c):
-     c.run(f'ansible-playbook -i {inventory_path} playbook.yml')
+     c.run(f'ansible-playbook -i inventory.yml playbook.yml')
 
 @task
 def destroy_infrastructure(c):

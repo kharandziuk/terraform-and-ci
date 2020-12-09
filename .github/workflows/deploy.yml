@@ -28,7 +28,7 @@ jobs:
         with:
           python-version: '3.8'
 
-      - run: pip install invoke python-dotenv ansible
+      - run: pip install invoke python-dotenv ansible==2.9.2 requests
 
       - name: read terraform_version
         id: terraform_version
@@ -36,12 +36,16 @@ jobs:
         with:
           path: .terraform-version
 
-      - name: set default enevironmen
+      - name: set default enevironment
         run: echo "DEPLOYMENT_ENV=$(inv which-environment | tail -n1)" >> $GITHUB_ENV
 
+      - name: print ansible version
+        run: echo "ansible-playbook --version"
+
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v1.2.1
         with:
+          terraform_wrapper: false
           terraform_version: ${{ steps.terraform_version.outputs.content }}
 
       - name: start deployment
@@ -53,7 +57,11 @@ jobs:
           env: ${{ env.DEPLOYMENT_ENV }}
 
       - name: run invoke
-        run: invoke provision
+        run: invoke all
+        env:
+          DEPLOYMENT_ENV: ${{ env.DEPLOYMENT_ENV }}
+
+      - run: cat inventory.yml
         env:
           DEPLOYMENT_ENV: ${{ env.DEPLOYMENT_ENV }}
 
