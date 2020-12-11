@@ -39,9 +39,6 @@ jobs:
       - name: set default enevironment
         run: echo "DEPLOYMENT_ENV=$(inv which-environment | tail -n1)" >> $GITHUB_ENV
 
-      - name: print ansible version
-        run: echo "ansible-playbook --version"
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1.2.1
         with:
