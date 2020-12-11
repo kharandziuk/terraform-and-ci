@@ -38,7 +38,7 @@ jobs:
         run: make terraform-destroy
 
       - name: run invoke
-        run: inv destroy-infrastructure
+        run: inv destroy
         env:
           DEPLOYMENT_ENV: ${{ env.DEPLOYMENT_ENV }}
 
