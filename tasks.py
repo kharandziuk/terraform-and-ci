@@ -30,7 +30,7 @@ def apply(c):
         f"terraform -chdir={ENV_DIR} init --reconfigure && terraform -chdir={ENV_DIR} apply --auto-approve"
     )
 
-@task(apply_infrastructure)
+@task(apply)
 def output_inventory(c):
     c.run(
         f"terraform -chdir={ENV_DIR} output -json inventory | jq -r . > {inventory_path}"
